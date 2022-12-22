@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!--
+ @license
+ Copyright 2019 Google LLC. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+-->
+<html>
+
+<head>
+  <title>Tilt and Rotation</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+
+  <script type="module" crossorigin src="./DashBoard/assets/index.7b909565.js"></script>
+  <link rel="stylesheet" href="./DashBoard/assets/index.3cbaac7e.css">
+</head>
+
+<body>
+  <div id="map"></div>
+
+  <div class="card card1">
+    <h3>313</h3>
+    <span>Total Vehicles</span>
+  </div>
+  <div class="card card2">
+    <h3>24</h3>
+    <span>Criminal Wanted Vehicles</span>
+  </div>
+  <div class="card card3">
+    <h3>76</h3>
+    <span>Traffic Wanted Vehicles</span>
+  </div>
+  <div class="card card4">
+    <h3 class="time"></h3>
+    <div>
+      <span class="date"></span>
+      <span class="ampm"></span>
+    </div>
+  </div>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqO39DAseHSaLtcKC1T6u6-uPz8_Lp7YA&callback=initMap&v=beta"
+    defer></script>
+  <script>
+    function updateTime() {
+      var dateInfo = new Date();
+      var hr,
+        _min = (dateInfo.getMinutes() < 10) ? "0" + dateInfo.getMinutes() : dateInfo.getMinutes(),
+        sec = (dateInfo.getSeconds() < 10) ? "0" + dateInfo.getSeconds() : dateInfo.getSeconds(),
+        ampm = (dateInfo.getHours() >= 12) ? "PM" : "AM";
+      if (dateInfo.getHours() == 0) {
+        hr = 12;
+      } else if (dateInfo.getHours() > 12) {
+        hr = dateInfo.getHours() - 12;
+      } else {
+        hr = dateInfo.getHours();
+      }
+      var currentTime = hr + ":" + _min + ":" + sec;
+      document.getElementsByClassName("time")[0].innerHTML = currentTime;
+      document.getElementsByClassName("ampm")[0].innerHTML = ampm;
+      var dow = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+        month = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December"
+        ],
+        day = dateInfo.getDate();
+      var currentDate = dow[dateInfo.getDay()] + ", " + month[dateInfo.getMonth()] + " " + day;
+      document.getElementsByClassName("date")[0].innerHTML = currentDate;
+    };
+    updateTime();
+    setInterval(function () {
+      updateTime()
+    }, 1000);
+  </script>
+</body>
+
+</html>
